@@ -1,4 +1,4 @@
 #Updating book
 
-book =Book.object.add('Nineteen Eigty-Four)
+book =Book.object.add("book.title", "Nineteen Eighty-Four")
 book.save()
