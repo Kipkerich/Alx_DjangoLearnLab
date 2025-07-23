@@ -3,10 +3,10 @@ from .models import Library, Book
 from django.views.generic import DetailView
 
 def library_list(request):
-    book = book.objects.all() #Fetch all library instances from the database
+    book = Book.objects.all() #Fetch all library instances from the database
     context = {'book_list': book}
     
-    return render(request, relationship_app/book_details.html , context)
+    return render(request, relationship_app/list_books.html , context)
 
 class LibraryDetailView(DetailView):
     model = Library
