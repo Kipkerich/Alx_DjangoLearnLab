@@ -1,9 +1,21 @@
 from django.shortcuts import render
-from .models import Book
+from .models import Library
+from django.views.generic import DetailView
 
-def book_list(request):
-    books = Book.objects.all() #Fetch all book instances from the database
-    context = {'book_list': books}
+def library_list(request):
+    Library = library_list.objects.all() #Fetch all library instances from the database
+    context = {'book_list': library_list}
     
-    return render(request, relationship_app/list_books.html , context)
+    return render(request, relationship_app/library_details.html , context)
+
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+        
+        
+    
+    
 
