@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import Library
+from .models import Library, Book
 from django.views.generic import DetailView
 
 def library_list(request):
-    Library = library_list.objects.all() #Fetch all library instances from the database
-    context = {'book_list': library_list}
+    book = book.objects.all() #Fetch all library instances from the database
+    context = {'book_list': book}
     
     return render(request, relationship_app/library_details.html , context)
 
