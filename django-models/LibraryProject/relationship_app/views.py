@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Library, Book
-from django.views.generic import DetailView
+from django.views.generic.detail import DetailView
+
 
 def library_list(request):
     book = Book.objects.all() #Fetch all library instances from the database
