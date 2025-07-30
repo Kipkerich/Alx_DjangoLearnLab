@@ -8,6 +8,6 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ()
     
 
-admin.site.register(Book)
+admin.site.register(Book,CustomUser, CustomUserManager, CustomUserAdmin)
 
-admin.site.register(CustomUser, CustomUserManager)
+
