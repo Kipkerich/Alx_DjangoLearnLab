@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
     
 REQUIRED_FIELDS = ['username', 'email', 'date_of_birth']
 
-class CustomeUserManager(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     def create_user(self,date_of_birth,profile_photo, email, username):
         if not date_of_birth:
             raise ValueError('Use the correct date formart')
