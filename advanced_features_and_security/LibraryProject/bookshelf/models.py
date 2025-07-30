@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -39,6 +39,9 @@ class CustomUserManager(BaseUserManager):
               date_of_birth = date_of_birth,
               profile_photo = profile_photo     
         )
+        permission = Permission.objects.get('can_view', 'can_edit')
+        
+        user.user_permissions.add(permission)
         user.save(using=self._db)
         return user
     
@@ -49,6 +52,8 @@ class CustomUserManager(BaseUserManager):
               date_of_birth = date_of_birth,
               profile_photo = profile_photo     
         )
+        permission = Permission.objects.get('can_create', 'can_delete', 'can_view', 'can_edit')
+        user.user_permissions.add(permission)
         user.is_admin = True
         user.is_superuser = True
         user.save(using=self._db)
