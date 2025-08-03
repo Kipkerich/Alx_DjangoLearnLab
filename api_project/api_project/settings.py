@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'rest_framework.authtoken',
+    'rest_framework.authentication.TokenAuthentication',
 ]
     
 
