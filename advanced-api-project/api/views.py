@@ -8,11 +8,11 @@ class CustomBookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     
 
-class DetailVIew(generics.ListAPIView):
+class CustomBookDetailVIew(generics.ListAPIView):
     queryset = Book.objects.get()
     serializer_class = BookSerializer
     
-class CreateView(generics.CreateAPIView):
-    new_book = Book(title=input(), author=input(), puplicationyear=input())
+# class CreateView(generics.CreateAPIView):
+#     new_book = Book(title=input(), author=input(), puplicationyear=input())
 
-    new_book.save()    
+#     new_book.save()    
