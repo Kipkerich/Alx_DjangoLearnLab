@@ -11,3 +11,12 @@ class CustomBookListView(generics.ListAPIView):
         author = self.request.author
         return Book.objects.filter(Book=author)
     
+    def CreateView(self):
+        pass
+    
+    def UpdateView(self):
+        pass
+    
+    def DeleteView(self):
+        pass
+    
