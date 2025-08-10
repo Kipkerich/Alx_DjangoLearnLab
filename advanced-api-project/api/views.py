@@ -7,7 +7,7 @@ class CustomBookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     
-    def get_queryset(self):
+    def DetailView(self):
         author = self.request.author
         return Book.objects.filter(Book=author)
     
