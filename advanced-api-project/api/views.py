@@ -1,5 +1,6 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import status
 from .models import Book 
 from .serializers import BookSerializer
@@ -7,6 +8,7 @@ from .serializers import BookSerializer
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def ListView(request, pk):
     try:
         book = Book.objects.get(pk=pk)
@@ -17,6 +19,7 @@ def ListView(request, pk):
             serializer = BookSerializer(book)
             return Response(serializer.data) 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def DetailView(request, pk):
     try:
         book =Book.objects.get(pk=pk)
