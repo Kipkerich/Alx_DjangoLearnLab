@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import status
 from .models import Book 
 from .serializers import BookSerializer
@@ -41,7 +41,8 @@ def DetailView(request, pk):
         book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
            
-@api_view(['POST'])   
+@api_view(['POST'])  
+@permission_classes([IsAuthenticated]) 
 def CreateView(request):
         serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
@@ -49,7 +50,8 @@ def CreateView(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@api_view(['PUT'])    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])    
 def UpdateView(request, pk):
         try:
             book = Book.objects.get(pk=pk)
