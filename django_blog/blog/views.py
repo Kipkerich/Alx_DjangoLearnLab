@@ -6,7 +6,7 @@ from .forms import CustomUserCreationForm
 #Homepage View
 def home(request):
     
-    return render(request, 'index.html')
+    return render(request, 'blog/index.html')
 
 #Registration page View
 def register(request):
@@ -18,7 +18,7 @@ def register(request):
             return redirect('home')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'register/register.html', {'form': form})
+    return render(request, 'accounts/register.html', {'form': form})
 
 #Login page view
 def login_view(request):
@@ -33,7 +33,7 @@ def login_view(request):
                 return redirect('home')  # Replace 'home' with your desired redirect URL
     else:
         form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})  
+    return render(request, 'accounts/login.html', {'form': form})  
 
 #Logout page view
 def logout_view(request):
@@ -43,4 +43,4 @@ def logout_view(request):
 #Blog page View
 def blog(request):
     
-    return render(request, 'blog.html')
+    return render(request, 'blog/blog.html')
