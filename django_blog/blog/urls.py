@@ -12,7 +12,7 @@ urlpatterns = [
     
     path('post/new/' , views.CreateView, name='create_post'),
     path('post/<int:pk>/', views.DetailView, name='view_posts'),
-    path('books/<int:pk>/edit/', views.UpdateView, name='edit_posts'),
-    path('books/<int:pk>/delete/', views.DeleteView, name='delete_posts'),
+    path('post/<int:pk>/update/', views.UpdateView, name='edit_posts'),
+    path('post/<int:pk>/delete/', views.DeleteView, name='delete_posts'),
 
 ]
