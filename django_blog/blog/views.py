@@ -3,6 +3,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework import status
+from .models import Post
+from .serializers import PostSerializer
 
 def home_view(request):
     
@@ -17,7 +23,7 @@ def register_view(request):
             return redirect('home')  # Home redirect URL
     else:
         form = CustomUserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, 'blog/register.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -31,7 +37,7 @@ def login_view(request):
                 return redirect('home')  # Home redirect URL
     else:
         form = AuthenticationForm()
-    return render(request, 'accounts/login.html', {'form': form})
+    return render(request, 'blog/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
@@ -41,3 +47,72 @@ def logout_view(request):
 def profile_view(request):
     
     return render(request, 'blog/profile.html')
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def ListView(request, pk):
+    try:
+        post = Post.objects.get(pk=pk)
+    except post.doesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND) 
+    finally:
+        if request.method == 'GET':
+            serializer = PostSerializer(post)
+            return Response(serializer.data) 
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def DetailView(request, pk):
+    try:
+        book =Post.objects.get(pk=pk)
+    except Post.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = Post(Post)
+        return Response(serializer.data)
+    
+    elif request.method == 'PUT':
+        serializer = PostSerializer(Post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        Post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+           
+@api_view(['POST'])  
+@permission_classes([IsAuthenticated]) 
+def CreateView(request):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])    
+def UpdateView(request, pk):
+        try:
+            post = PostSerializer.objects.get(pk=pk)
+        except post.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        finally:
+            if request.method == 'PUT':
+                serializer = PostSerializer(post, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])    
+def DeleteView(request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        finally:
+            if request.method == 'DELETE':
+                post.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)

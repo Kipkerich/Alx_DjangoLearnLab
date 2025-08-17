@@ -9,4 +9,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('home/', views.home_view, name='home'),
     path('profile/', views.profile_view, name='profile'),
+    
+    path('post/new/' , views.CreateView, name='create_post'),
+    path('post/<int:pk>/', views.DetailView, name='view_posts'),
+    path('books/<int:pk>/edit/', views.UpdateView, name='edit_posts'),
+    path('books/<int:pk>/delete/', views.DeleteView, name='delete_posts'),
+
 ]
