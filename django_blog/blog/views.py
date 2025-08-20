@@ -48,23 +48,13 @@ def profile_view(request):
     
     return render(request, 'blog/profile.html')
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def ListView(request, pk):
-    try:
-        post = Post.objects.get(pk=pk)
-    except post.doesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND) 
-    finally:
-        if request.method == 'GET':
-            serializer = PostSerializer(post)
-            return Response(serializer.data) 
+
+        
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def DetailView(request, pk):
+def view_posts(request, pk):
     try:
-        book =Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
+        post =Post.objects.get(pk=pk)
+    except post.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
@@ -81,19 +71,19 @@ def DetailView(request, pk):
     elif request.method == 'DELETE':
         Post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
            
 @api_view(['POST'])  
-@permission_classes([IsAuthenticated]) 
-def CreateView(request):
+def create_posts(request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+   
     
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])    
-def UpdateView(request, pk):
+def update_posts(request, pk):
         try:
             post = PostSerializer.objects.get(pk=pk)
         except post.DoesNotExist:
@@ -107,7 +97,7 @@ def UpdateView(request, pk):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])    
-def DeleteView(request, pk):
+def delete_posts(request, pk):
         try:
             post = Post.objects.get(pk=pk)
         except Post.DoesNotExist:
