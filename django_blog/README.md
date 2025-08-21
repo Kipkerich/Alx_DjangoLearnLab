@@ -1,37 +1,57 @@
-# 📝 Django Blog Application
+## 📝 Django Blog Application
 
-A simple **Django Blog App** with authentication and CRUD functionality.  
-Users can register, log in, edit their profiles, and create, read, update, or delete blog posts.  
+A simple blog application built with Django and Bootstrap, featuring user authentication, blog posts management, and a comment system.
 
-The project also includes a **REST API** built with **Django REST Framework (DRF)**.
+## 🚀 Features
+
+**User Authentication**
+
+- Register, login, and manage profiles
+
+- Profile editing with account & profile info
+
+**Blog Posts**
+
+- Create, Read, Update, Delete (CRUD) operations
+
+- Only authenticated users can create posts
+
+- Only post authors can update or delete their posts
+
+- Post list & detail pages are accessible to all users
+
+**Comments**
+
+- Add comments under blog posts
+
+- Authenticated users can create, update, or delete their own comments
+
+- Each comment shows author & timestamps
+
+**UI/UX**
+
+- Responsive templates styled with Bootstrap 5
+
+- User-friendly forms and confirmation pages
 
 
-
-## ✨ Features
-
-- 🔑 **User Authentication**
-  - Register, Login, Logout
-  - Profile page with update functionality
-- 📝 **Blog Posts**
-  - List all posts (public)
-  - View post details (public)
-  - Create, edit, and delete posts (author only)
-- 🌐 **REST API**
-  - Endpoints for listing, retrieving, creating, updating, and deleting posts
-  - Token-based authentication for API access
-- 🎨 **Bootstrap Styling** for a clean UI
-
----
 
 ## 📂 Project Structure
 
-django_blog/
-│── blog/ # Blog app (models, views, templates, urls)
-│── users/ # User app (profiles, forms, views, urls)
-│── django_blog/ # Project settings and config
-│── templates/ # Base templates
-│── static/ # Static files (CSS, JS, Images)
-│── manage.py
+blog_project/
+│── blog/                 # Blog app
+│   ├── models.py         # Post & Comment models
+│   ├── views.py          # CRUD views for posts & comments
+│   ├── urls.py           # URL patterns
+│   ├── templates/blog/   # HTML templates
+│       ├── base.html
+│       ├── post_list.html
+│       ├── post_detail.html
+│       ├── post_form.html
+│       ├── confirm_form.html
+│       ├── comment_form.html
+│── requirements.txt
+│── README.md
 
 ## API Endpoints(DRF)
 | Method | Endpoint           | Description                 |
