@@ -1,63 +1,32 @@
-# 📌 Social Media API
+# Social Media API – README Documentation
 
-A Django REST Framework-powered social media backend with custom user authentication, posts, and comments.
-Users can register, log in with token authentication, create posts, comment on posts, and follow other users.
+## Authentication
 
-## 🚀 Features
+* **Register** → `POST /api/accounts/register/`
+* **Login** → `POST /api/accounts/login/` → returns auth token
+* **Profile** → `GET /api/accounts/me/` (requires token)
 
-### Custom User model with:
+## User Relationships
 
- - bio, profile picture, and followers
+* **Follow User** → `POST /api/accounts/follow/<user_id>/`
+* **Unfollow User** → `POST /api/accounts/unfollow/<user_id>/`
 
-  -Token-based Authentication using DRF
+## Posts
 
-### CRUD operations for:
+* **List / Create Posts** → `GET/POST /api/posts/`
+* **Retrieve / Update / Delete Post** → `GET/PUT/DELETE /api/posts/<id>/`
+* Supports pagination + filtering by title/content
 
-    - Posts (with title & content)
+## Comments
 
-    - Comments (linked to posts & users)
+* **List / Create Comments** → `GET/POST /api/comments/`
+* **Retrieve / Update / Delete Comment** → `GET/PUT/DELETE /api/comments/<id>/`
 
-### Permissions:
+## Feed
 
-    - Users can only edit/delete their own posts & comments
+* **Get Feed** → `GET /api/feed/` (shows posts from followed users, newest first)
 
-    - Pagination for posts & comments
+### Notes
 
-### Filtering & search on posts:
-
-    - Search by title or content
-
-    - Ordering by created_at or updated_at
-
-## API EndPoints
-### Authentication
-
-POST /api/accounts/register/ → Register a new user
-
-POST /api/accounts/login/ → Login and retrieve token
-
-GET /api/accounts/me/ → Get current logged-in user details
-
-### Posts
-
-GET /api/posts/ → List all posts (paginated, searchable, orderable)
-
-POST /api/posts/ → Create a new post (auth required)
-
-GET /api/posts/{id}/ → Retrieve a single post
-
-PUT /api/posts/{id}/ → Update a post (owner only)
-
-DELETE /api/posts/{id}/ → Delete a post (owner only)
-
-### Comments
-
-GET /api/comments/ → List all comments (paginated)
-
-POST /api/comments/ → Add a new comment (auth required)
-
-GET /api/comments/{id}/ → Retrieve a single comment
-
-PUT /api/comments/{id}/ → Update a comment (owner only)
-
-DELETE /api/comments/{id}/ → Delete a comment (owner only)
+* All endpoints require authentication (except register/login).
+* Use token-based auth: `Authorization: Token <your_token>`
