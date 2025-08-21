@@ -16,5 +16,20 @@
       <a href="{% url 'post-list' %}" class="btn btn-secondary btn-sm">Back</a>
     </div>
   </div>
+  {% for comment in post.comments.all %}
+  <div class="mb-3 border-bottom pb-2">
+    <strong>{{ comment.author.username }}</strong>
+    <span class="text-muted"> - {{ comment.created_at|date:"F d, Y H:i" }}</span>
+    <p class="mt-1">{{ comment.content }}</p>
+
+    {% if user == comment.author %}
+      <a href="{% url 'comment-update' comment.pk %}" class="btn btn-sm btn-warning">Edit</a>
+      <a href="{% url 'comment-delete' comment.pk %}" class="btn btn-sm btn-danger">Delete</a>
+    {% endif %}
+  </div>
+{% endfor %}
+
+<a href="{% url 'comment-create' post.id %}" class="btn btn-primary">Add Comment</a>
+
 </div>
 {% endblock %}
