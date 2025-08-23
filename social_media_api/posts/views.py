@@ -14,8 +14,8 @@ from notifications.models import Notification
 class LikePostView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, post_id):
-        post = generics.get_object_or_404(Post, pk=pk )
+    def post(self, request, pk):
+        post = generics.get_object_or_404(Post, pk=pk)
 
         # Check if user already liked the post
         if Like.objects.filter(user=request.user, post=post).exists():
