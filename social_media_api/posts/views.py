@@ -15,14 +15,14 @@ class LikePostView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
+        post = generics.get_object_or_404(Post, pk=pk )
 
         # Check if user already liked the post
         if Like.objects.filter(user=request.user, post=post).exists():
             return Response({"detail": "You already liked this post."},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        like = Like.objects.create(user=request.user, post=post)
+        like = Like.objects.get_or_create(user=request.user, post=post)
 
         # Create notification for post author
         if post.author != request.user:
