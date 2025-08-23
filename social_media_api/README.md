@@ -1,4 +1,4 @@
-# Social Media API – README Documentation
+# Social Media API Documentation
 
 ## Authentication
 
@@ -15,6 +15,8 @@
 
 * **List / Create Posts** → `GET/POST /api/posts/`
 * **Retrieve / Update / Delete Post** → `GET/PUT/DELETE /api/posts/<id>/`
+* **Like Post** → `POST /api/posts/<id>/like/`
+* **Unlike Post** → `POST /api/posts/<id>/unlike/`
 * Supports pagination + filtering by title/content
 
 ## Comments
@@ -25,6 +27,11 @@
 ## Feed
 
 * **Get Feed** → `GET /api/feed/` (shows posts from followed users, newest first)
+
+## Notifications
+
+* **List Notifications** → `GET /api/notifications/`
+* **Mark Notification as Read** → `PATCH /api/notifications/<id>/read/`
 
 ### Notes
 
