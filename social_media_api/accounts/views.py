@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,12 +6,13 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer
 from .models import CustomUser
+from notifications.models import Notification
 
 User = CustomUser.objects.all()
 
 # Register View
 class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -50,6 +51,15 @@ class FollowUserView(APIView):
             return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.following.add(target_user)
+        
+         # Create notification
+        Notification.objects.create(
+            recipient=target_user,
+            actor=request.user,
+            verb="started following you"
+        )
+        
+        
         return Response({"message": f"You are now following {target_user.username}."})
 
 
